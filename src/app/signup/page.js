@@ -1,11 +1,11 @@
 import React from 'react'
-import LoginPage from './login/loginpage'
-import '../styles/login-page.css'
+import SignupPage from './signuppage'
+import '../../styles/signup-page.css'
 
 export default function page() {
   return (
     <div>
-      <LoginPage/>
+        <SignupPage/>
     </div>
   )
 }

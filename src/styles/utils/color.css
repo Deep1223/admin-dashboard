@@ -1,0 +1,7 @@
+.text-danger {
+    color: var(--common-danger);
+}
+
+.text-primary {
+    color: var(--primary);
+}

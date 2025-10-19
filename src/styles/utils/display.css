@@ -1,0 +1,35 @@
+.display-revert {
+    display: revert;
+}
+
+.w-fit-content {
+    width: fit-content;
+}
+
+.align-items-self-end {
+    align-items: self-end;
+}
+
+.gap-5 {
+    gap: 5px;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.gap-25 {
+    gap: 25px;
+}
+
+.gap-30 {
+    gap: 30px;
+}

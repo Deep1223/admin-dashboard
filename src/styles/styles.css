@@ -1,0 +1,248 @@
+@import "./utils/button.css";
+@import "./utils/margin.css";
+@import "./utils/padding.css";
+@import "./utils/text.css";
+@import "./utils/height.css";
+@import "./utils/width.css";
+@import "./utils/display.css";
+@import "./utils/color.css";
+@import "./utils/common-style.css";
+
+/* Margin */
+.ml-unset {
+    margin-left: unset !important;
+}
+
+/* Margin */
+
+
+/* Z-Index */
+.z-inex-1 {
+    z-index: 1 !important;
+}
+
+.z-index-2 {
+    z-index: 2 !important;
+}
+
+/* Z-Index */
+
+
+/* Apply Background Colors */
+.bg-primary-50 {
+    background-color: var(--primary-50);
+}
+
+.bg-primary-100 {
+    background-color: var(--primary-100);
+}
+
+.bg-primary-200 {
+    background-color: var(--primary-200);
+}
+
+.bg-primary-300 {
+    background-color: var(--primary-300);
+}
+
+.bg-primary-400 {
+    background-color: var(--primary-400);
+}
+
+.bg-primary-500 {
+    background-color: var(--primary-500);
+}
+
+.bg-primary-600 {
+    background-color: var(--primary-600);
+}
+
+.bg-primary-700 {
+    background-color: var(--primary-700);
+}
+
+.bg-primary-800 {
+    background-color: var(--primary-800);
+}
+
+.bg-primary-900 {
+    background-color: var(--primary-900);
+}
+
+.bg-primary {
+    background-color: var(--primary);
+}
+
+.table-content {
+    height: calc(100vh - 228px);
+}
+
+.btn {
+    display: flex;
+    align-items: baseline;
+}
+
+/* Fix table cell height without h-100 - small td, normal th */
+.table td {
+    height: auto !important;
+    min-height: 25px !important;
+    vertical-align: middle !important;
+    padding: 4px 8px !important;
+}
+
+.table th {
+    height: auto !important;
+    min-height: 45px !important;
+    vertical-align: middle !important;
+    padding: 12px 16px !important;
+}
+
+/* Ensure table rows have proper height - small for tbody */
+.table tbody tr {
+    height: auto !important;
+    min-height: 25px !important;
+}
+
+/* Fix table cell content alignment */
+.table td .d-flex {
+    align-items: center !important;
+    min-height: 16px;
+}
+
+/* Ensure buttons in table cells are properly aligned */
+.table td .btn {
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    max-height: calc(100vh - 70px);
+    overflow: auto;
+}
+
+.lead-status-history {
+    height: calc(100vh - 215px);
+    overflow: auto;
+}
+
+.lead-detail-height {
+    height: calc(100vh - 159px);
+}
+
+.lead-detail-profile {
+    height: calc(100vh - 157px);
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    /* For horizontal scrollbar */
+}
+
+/* Track (Background) */
+::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #f3f4f6, #e5e7eb);
+    /* Softer light gray */
+    border-radius: 10px;
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d1d5db, #9ca3af);
+    /* Light gray gradient */
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #9ca3af, #6b7280);
+    /* Medium-light gray */
+}
+
+@media screen and (max-width: 1024px) {
+    .lead-status-history {
+        height: calc(100vh - 215px);
+        overflow: auto;
+    }
+
+    .lead-detail-height {
+        height: 100%;
+    }
+
+    .lead-detail-profile {
+        height: 100%;
+        overflow: none;
+        scrollbar-width: auto;
+    }
+}
+
+
+
+
+.border-radius-4 {
+    border-radius: 4px !important;
+}
+
+.filter-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f1f5f9;
+    /* soft gray-blue background */
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    gap: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.filter-badge:hover {
+    background-color: #e2e8f0;
+    border-color: #94a3b8;
+}
+
+.filter-label {
+    color: #64748b;
+}
+
+.filter-value {
+    color: #2563eb;
+    /* blue-600 */
+}
+
+.filter-remove {
+    color: #ef4444;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    line-height: 1;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.filter-remove:hover {
+    background-color: #ef4444;
+    color: #fff;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+

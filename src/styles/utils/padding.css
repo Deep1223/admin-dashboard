@@ -1,0 +1,435 @@
+/* Padding Top (pt) - 4px to 64px in 4px increments */
+.pt-4p {
+    padding-top: 4px;
+}
+
+.pt-6p {
+    padding-top: 6px;
+}
+
+.pt-8p {
+    padding-top: 8px;
+}
+
+.pt-12p {
+    padding-top: 12px;
+}
+
+.pt-16p {
+    padding-top: 16px;
+}
+
+.pt-20p {
+    padding-top: 20px;
+}
+
+.pt-24p {
+    padding-top: 24px;
+}
+
+.pt-28p {
+    padding-top: 28px;
+}
+
+.pt-32p {
+    padding-top: 32px;
+}
+
+.pt-36p {
+    padding-top: 36px;
+}
+
+.pt-40p {
+    padding-top: 40px;
+}
+
+.pt-44p {
+    padding-top: 44px;
+}
+
+.pt-48p {
+    padding-top: 48px;
+}
+
+.pt-52p {
+    padding-top: 52px;
+}
+
+.pt-56p {
+    padding-top: 56px;
+}
+
+.pt-60p {
+    padding-top: 60px;
+}
+
+.pt-64p {
+    padding-top: 64px;
+}
+
+/* Padding Bottom (pb) - 4px to 64px in 4px increments */
+.pb-4p {
+    padding-bottom: 4px;
+}
+
+.pb-8p {
+    padding-bottom: 8px;
+}
+
+.pb-12p {
+    padding-bottom: 12px;
+}
+
+.pb-16p {
+    padding-bottom: 16px;
+}
+
+.pb-20p {
+    padding-bottom: 20px;
+}
+
+.pb-24p {
+    padding-bottom: 24px;
+}
+
+.pb-28p {
+    padding-bottom: 28px;
+}
+
+.pb-32p {
+    padding-bottom: 32px;
+}
+
+.pb-36p {
+    padding-bottom: 36px;
+}
+
+.pb-40p {
+    padding-bottom: 40px;
+}
+
+.pb-44p {
+    padding-bottom: 44px;
+}
+
+.pb-48p {
+    padding-bottom: 48px;
+}
+
+.pb-52p {
+    padding-bottom: 52px;
+}
+
+.pb-56p {
+    padding-bottom: 56px;
+}
+
+.pb-60p {
+    padding-bottom: 60px;
+}
+
+.pb-64p {
+    padding-bottom: 64px;
+}
+
+/* Padding Left (pl) - 4px to 64px in 4px increments */
+.pl-4p {
+    padding-left: 4px;
+}
+
+.pl-8p {
+    padding-left: 8px;
+}
+
+.pl-12p {
+    padding-left: 12px;
+}
+
+.pl-16p {
+    padding-left: 16px;
+}
+
+.pl-20p {
+    padding-left: 20px;
+}
+
+.pl-24p {
+    padding-left: 24px;
+}
+
+.pl-28p {
+    padding-left: 28px;
+}
+
+.pl-32p {
+    padding-left: 32px;
+}
+
+.pl-36p {
+    padding-left: 36px;
+}
+
+.pl-40p {
+    padding-left: 40px;
+}
+
+.pl-44p {
+    padding-left: 44px;
+}
+
+.pl-48p {
+    padding-left: 48px;
+}
+
+.pl-52p {
+    padding-left: 52px;
+}
+
+.pl-56p {
+    padding-left: 56px;
+}
+
+.pl-60p {
+    padding-left: 60px;
+}
+
+.pl-64p {
+    padding-left: 64px;
+}
+
+/* Padding Right (pr) - 4px to 64px in 4px increments */
+.pr-4p {
+    padding-right: 4px;
+}
+
+.pr-8p {
+    padding-right: 8px;
+}
+
+.pr-12p {
+    padding-right: 12px;
+}
+
+.pr-16p {
+    padding-right: 16px;
+}
+
+.pr-20p {
+    padding-right: 20px;
+}
+
+.pr-24p {
+    padding-right: 24px;
+}
+
+.pr-28p {
+    padding-right: 28px;
+}
+
+.pr-32p {
+    padding-right: 32px;
+}
+
+.pr-36p {
+    padding-right: 36px;
+}
+
+.pr-40p {
+    padding-right: 40px;
+}
+
+.pr-44p {
+    padding-right: 44px;
+}
+
+.pr-48p {
+    padding-right: 48px;
+}
+
+.pr-52p {
+    padding-right: 52px;
+}
+
+.pr-56p {
+    padding-right: 56px;
+}
+
+.pr-60p {
+    padding-right: 60px;
+}
+
+.pr-64p {
+    padding-right: 64px;
+}
+
+/* Padding Y (py) - Vertical padding - 4px to 64px in 4px increments */
+.py-4p {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.py-8p {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.py-12p {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.py-16p {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.py-20p {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.py-24p {
+    padding-top: 24px;
+    padding-bottom: 24px;
+}
+
+.py-28p {
+    padding-top: 28px;
+    padding-bottom: 28px;
+}
+
+.py-32p {
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.py-36p {
+    padding-top: 36px;
+    padding-bottom: 36px;
+}
+
+.py-40p {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.py-44p {
+    padding-top: 44px;
+    padding-bottom: 44px;
+}
+
+.py-48p {
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+.py-52p {
+    padding-top: 52px;
+    padding-bottom: 52px;
+}
+
+.py-56p {
+    padding-top: 56px;
+    padding-bottom: 56px;
+}
+
+.py-60p {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.py-64p {
+    padding-top: 64px;
+    padding-bottom: 64px;
+}
+
+/* Padding X (px) - Horizontal padding - 4px to 64px in 4px increments */
+.px-4p {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.px-9p {
+    padding-left: 9px;
+    padding-right: 9px;
+}
+
+.px-8p {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.px-12p {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.px-16p {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.px-20p {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.px-24p {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.px-28p {
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+.px-32p {
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.px-36p {
+    padding-left: 36px;
+    padding-right: 36px;
+}
+
+.px-40p {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.px-44p {
+    padding-left: 44px;
+    padding-right: 44px;
+}
+
+.px-48p {
+    padding-left: 48px;
+    padding-right: 48px;
+}
+
+.px-52p {
+    padding-left: 52px;
+    padding-right: 52px;
+}
+
+.px-56p {
+    padding-left: 56px;
+    padding-right: 56px;
+}
+
+.px-60p {
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.px-64p {
+    padding-left: 64px;
+    padding-right: 64px;
+}
+
+
+.p-16p {
+    padding: 16px !important; 
+}

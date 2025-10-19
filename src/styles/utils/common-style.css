@@ -1,0 +1,23 @@
+.top-0 {
+    top: 0;
+}
+
+.top-32 {
+    top: 32px;
+}
+
+
+
+.validate-input .label-form-control {
+    align-items: center;
+    color: var(--gray-700);
+    display: flex
+;
+    font-size: 14px;
+    font-weight: 500;
+    gap: 2px;
+    line-height: 145%;
+    margin-bottom: 5px;
+    width: auto;
+    z-index: 2;
+}
