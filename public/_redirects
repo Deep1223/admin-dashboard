@@ -1,0 +1,11 @@
+# Netlify redirects for Next.js SPA
+# This ensures all routes are handled by the client-side router
+
+# Handle all routes that don't match static files
+/*    /index.html   200
+
+# Optional: Handle specific API routes if you have them
+# /api/*  https://your-api-domain.com/api/:splat  200
+
+# Optional: Handle specific redirects
+# /old-page  /new-page  301
