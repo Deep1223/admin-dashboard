@@ -392,8 +392,8 @@ const Config = {
     downloadEndpoint: '/download',
     
     // Admin Authentication Endpoints
-    adminRegisterEndpoint: '/article/admin/register',
-    adminLoginEndpoint: '/article/admin/login',
+    adminRegisterEndpoint: '/api/article/admin/register',
+    adminLoginEndpoint: '/api/article/admin/login',
 
     // ==================== APP CONFIGURATION ====================
     // App Settings

@@ -8,6 +8,7 @@ import SignupModal from "../../components/SignupModal";
 import IISMethods from "@/utils/IISMethods";
 import Config from "@/config/config";
 import apiService from "@/utils/ApiService";
+import "../../styles/signup-page.css";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -84,7 +85,7 @@ export default function LoginPage() {
             <div className="login-form-section">
                 <div className="login-form-container">
                     <div className="login-header">
-                        <h2 className="login-title">Admin Sign In</h2>
+                        <h2 className="login-title">Sign In</h2>
                         <p className="login-subtitle">
                             Welcome back! Please enter your admin credentials below to access the article management system.
                         </p>
@@ -131,25 +132,38 @@ export default function LoginPage() {
                             <a href="#" className="forgot-password">Forgot your password?</a>
                         </div>
 
-                        <button 
-                            type="submit" 
-                            disabled={isSubmitting} 
-                            className={`login-button ${isSubmitting ? "loading" : ""}`}
-                        >
-                            {isSubmitting ? (
-                                <span className="button-content">
-                                    <svg className="spinner" viewBox="0 0 24 24">
-                                        <circle className="spinner-circle" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                                        <path className="spinner-path" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor"/>
-                                    </svg>
-                                    Signing in...
-                                </span>
-                            ) : (
-                                "Sign in"
-                            )}
-                        </button>
+                        <div className="login-actions">
+                            <button 
+                                type="submit" 
+                                disabled={isSubmitting} 
+                                className={`login-button ${isSubmitting ? "loading" : ""}`}
+                            >
+                                {isSubmitting ? (
+                                    <span className="button-content">
+                                        <svg className="spinner" viewBox="0 0 24 24">
+                                            <circle className="spinner-circle" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                                            <path className="spinner-path" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor"/>
+                                        </svg>
+                                        Signing in...
+                                    </span>
+                                ) : (
+                                    "Sign in"
+                                )}
+                            </button>
 
-                        <div className="divider">
+                            <div className="signup-link-secondary">
+                                <span>{"Don't have an admin account?"}</span>
+                                <button 
+                                    type="button" 
+                                    className="signup-button-secondary" 
+                                    onClick={() => setIsSignupModalOpen(true)}
+                                >
+                                    Register Admin
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* <div className="divider">
                             <span>OR</span>
                         </div>
 
@@ -161,18 +175,7 @@ export default function LoginPage() {
                                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                             </svg>
                             Sign in with Google
-                        </button>
-
-                        <div className="signup-link">
-                            <span>{"Don't have an admin account?"}</span>
-                            <button 
-                                type="button" 
-                                className="signup-button" 
-                                onClick={() => setIsSignupModalOpen(true)}
-                            >
-                                Register Admin
-                            </button>
-                        </div>
+                        </button> */}
                     </form>
                 </div>
             </div>
