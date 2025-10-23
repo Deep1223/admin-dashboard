@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SelectPicker, DatePicker } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
+import apiService from "@/utils/ApiService";
+import IISMethods from "@/utils/IISMethods";
 
 export default function SignupModal({ isOpen, onClose }) {
     const router = useRouter();
@@ -19,39 +21,32 @@ export default function SignupModal({ isOpen, onClose }) {
         console.log("Agree to terms:", agreeToTerms);
         
         if (!agreeToTerms) {
-            alert("Please agree to the Terms of Service and Privacy Policy to continue.");
+            IISMethods.errormsg("Please agree to the Terms of Service and Privacy Policy to continue.", 1);
             return;
         }
         
         setIsSubmitting(true);
         try {
-            // Import localStorage utilities
-            const { userStorage, initializeStorage } = await import('@/utils/localStorage');
+            // Prepare admin registration data according to API specification
+            const adminData = {
+                username: data.username,
+                email: data.userEmail,
+                password: data.userPassword,
+                role: data.role || "Editor" // Default role as per API spec
+            };
             
-            // Initialize storage if needed
-            initializeStorage();
+            // Call admin registration API
+            const response = await apiService.registerAdmin(adminData);
             
-            // Check if user already exists
-            if (userStorage.userExists(data.userEmail)) {
-                alert("User with this email already exists. Please use a different email.");
-                return;
+            if (response.success) {
+                IISMethods.successmsg("Admin account created successfully! Please login with your credentials.", 2);
+                onClose();
+            } else {
+                IISMethods.errormsg(response.message || "Admin registration failed. Please try again.", 1);
             }
-            
-            // Create new user
-            const newUser = userStorage.addUser({
-                userName: data.userName,
-                userEmail: data.userEmail,
-                userPassword: data.userPassword,
-                userPhoneNumber: data.userPhoneNumber,
-                userRole: data.userRole || "User"
-            });
-            
-            console.log("User created:", newUser);
-            alert("Account created successfully! Please login with your credentials.");
-            onClose();
         } catch (error) {
-            console.error("Signup error:", error);
-            alert("Signup failed. Please try again.");
+            console.error("Admin registration error:", error);
+            IISMethods.errormsg("Admin registration failed. Please try again.", 1);
         } finally {
             setIsSubmitting(false);
         }
@@ -68,7 +63,7 @@ export default function SignupModal({ isOpen, onClose }) {
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
-                    <h2 className="modal-title">Create Your Account</h2>
+                    <h2 className="modal-title">Register Admin Account</h2>
                     <button className="modal-close" onClick={onClose}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -79,32 +74,22 @@ export default function SignupModal({ isOpen, onClose }) {
 
                 <div className="modal-body">
                     <p className="modal-subtitle">
-                        Join our platform and start managing your business with our powerful CRM solution.
+                        Create a new admin account to access the article management system.
                     </p>
 
                     <form className="signup-modal-form" onSubmit={handleSubmit(onSubmit, onError)}>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <input 
-                                    id="firstName" 
-                                    type="text" 
-                                    {...register("firstName", { required: "First name is required" })} 
-                                    className="form-input" 
-                                    placeholder="First Name" 
-                                />
-                                {errors.firstName && <p className="error-message">{errors.firstName.message}</p>}
-                            </div>
-
-                            <div className="form-group">
-                                <input 
-                                    id="lastName" 
-                                    type="text" 
-                                    {...register("lastName", { required: "Last name is required" })} 
-                                    className="form-input" 
-                                    placeholder="Last Name" 
-                                />
-                                {errors.lastName && <p className="error-message">{errors.lastName.message}</p>}
-                            </div>
+                        <div className="form-group">
+                            <input 
+                                id="username" 
+                                type="text" 
+                                {...register("username", { 
+                                    required: "Username is required",
+                                    minLength: { value: 3, message: "Username must be at least 3 characters" }
+                                })} 
+                                className="form-input" 
+                                placeholder="Username" 
+                            />
+                            {errors.username && <p className="error-message">{errors.username.message}</p>}
                         </div>
 
                         <div className="form-group">
@@ -124,87 +109,26 @@ export default function SignupModal({ isOpen, onClose }) {
                             {errors.userEmail && <p className="error-message">{errors.userEmail.message}</p>}
                         </div>
 
-                        <div className="form-row">
-                            <div className="form-group">
-                                <input 
-                                    id="phone" 
-                                    type="tel" 
-                                    {...register("phoneNumber", { 
-                                        required: "Phone number is required",
-                                        pattern: {
-                                            value: /^[\+]?[1-9][\d]{0,15}$/,
-                                            message: "Invalid phone number"
-                                        }
-                                    })} 
-                                    className="form-input" 
-                                    placeholder="Phone Number" 
-                                />
-                                {errors.phoneNumber && <p className="error-message">{errors.phoneNumber.message}</p>}
-                            </div>
-
-                            <div className="form-group">
-                                <Controller
-                                    name="gender"
-                                    control={control}
-                                    rules={{ required: "Please select gender" }}
-                                    render={({ field }) => (
-                                        <SelectPicker
-                                            {...field}
-                                            placeholder="Select Gender"
-                                            style={{ width: "100%" }}
-                                            size="md"
-                                            data={[
-                                                { label: "Male", value: "male" },
-                                                { label: "Female", value: "female" },
-                                                { label: "Other", value: "other" },
-                                                { label: "Prefer not to say", value: "prefer-not-to-say" }
-                                            ]}
-                                        />
-                                    )}
-                                />
-                                {errors.gender && <p className="error-message">{errors.gender.message}</p>}
-                            </div>
-                        </div>
-
                         <div className="form-group">
                             <Controller
-                                name="dateOfBirth"
-                                control={control}
-                                rules={{ required: "Date of birth is required" }}
-                                render={({ field }) => (
-                                    <DatePicker
-                                        {...field}
-                                        placeholder="Select Date of Birth"
-                                        style={{ width: "100%" }}
-                                        size="md"
-                                        format="yyyy-MM-dd"
-                                        oneTap
-                                        cleanable={false}
-                                    />
-                                )}
-                            />
-                            {errors.dateOfBirth && <p className="error-message">{errors.dateOfBirth.message}</p>}
-                        </div>
-
-                        <div className="form-group">
-                            <Controller
-                                name="userRole"
+                                name="role"
                                 control={control}
                                 rules={{ required: "Please select a role" }}
                                 render={({ field }) => (
                                     <SelectPicker
                                         {...field}
-                                        placeholder="Select Your Role"
+                                        placeholder="Select Admin Role"
                                         style={{ width: "100%" }}
                                         size="md"
                                         data={[
-                                            { label: "Sales User", value: "sales user" },
-                                            { label: "Administrator", value: "Administrator" }
+                                            { label: "Super Admin", value: "Super Admin" },
+                                            { label: "Editor", value: "Editor" },
+                                            { label: "Reviewer", value: "Reviewer" }
                                         ]}
                                     />
                                 )}
                             />
-                            {errors.userRole && <p className="error-message">{errors.userRole.message}</p>}
+                            {errors.role && <p className="error-message">{errors.role.message}</p>}
                         </div>
 
                         <div className="form-group">

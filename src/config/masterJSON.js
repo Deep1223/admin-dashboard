@@ -624,6 +624,182 @@ const MasterJson = (type) => {
             ];
             break;
 
+            case 'research':
+                return [
+                    {
+                        tabname: 'Research Master',
+                        pagename: 'Research',
+                        aliasname: 'research',
+                        rightsidebarsize: 'sm',
+                        fields: [
+                            {
+                                field: 'title',
+                                text: 'Title',
+                                type: 'text',
+                                disabled: false,
+                                required: true,
+                                defaultvisibility: true,
+                                size: 'col-12',
+                                placeholder: 'Enter Title',
+                                defaultvalue: '',
+    
+                                showingrid: true,
+                                sorting: true,
+                                tablesize: 'tbl-w-250p',
+    
+                                filter: 1,
+                                filtertype: 'text',
+                                filterplaceholder: 'Enter Title',
+                                label: 'Title',
+                            },
+                            {
+                                field: 'journalid',
+                                text: 'Journal',
+                                type: 'dropdown',
+                                disabled: false,
+                                required: true,
+                                defaultvisibility: true,
+                                size: 'col-6',
+                                placeholder: 'Select Journal',
+                                defaultvalue: '',
+                                masterdata: 'journal',
+                                masterdataarray: Config.journal,
+                                formdatafield: 'journal',
+                                cleanable: true,
+                                searchable: true,
+    
+                                showingrid: true,
+                                sorting: true,
+                                tablesize: 'tbl-w-250p',
+    
+                                filter: 0,
+                            },
+                            {
+                                field: 'articletypeid',
+                                text: 'Article Type',
+                                type: 'dropdown',
+                                disabled: false,
+                                required: true,
+                                defaultvisibility: true,
+                                size: 'col-6',
+                                placeholder: 'Select Article Type',
+                                defaultvalue: '',
+                                masterdata: 'articletype',
+                                masterdataarray: Config.articletype,
+                                formdatafield: 'articletype',
+                                cleanable: true,
+                                searchable: true,
+    
+                                showingrid: true,
+                                sorting: true,
+                                tablesize: 'tbl-w-250p',
+    
+                                filter: 0,
+                            },
+                            {
+                                field: 'excerpt',
+                                text: 'Excerpt',
+                                type: 'html-editor',
+                                disabled: false,
+                                required: true,
+                                defaultvisibility: true,
+                                size: 'col-12',
+                                placeholder: 'Enter Excerpt',
+                                defaultvalue: '',
+    
+                                showingrid: true,
+                                sorting: false,
+                                tablesize: 'tbl-w-250p',
+    
+                                filter: 0,
+                            },
+                            {
+                                field: 'badgetypeid',
+                                text: 'Badge Type',
+                                type: 'dropdown',
+                                disabled: false,
+                                required: true,
+                                defaultvisibility: true,
+                                size: 'col-6',
+                                placeholder: 'Select Badge Type',
+                                defaultvalue: '',
+                                masterdata: 'badge',
+                                masterdataarray: Config.badgetype,
+                                formdatafield: 'badgetype',
+                                cleanable: true,
+                                searchable: true,
+    
+                                showingrid: true,
+                                sorting: true,
+                                tablesize: 'tbl-w-250p',
+    
+                                filter: 0,
+                            },
+                            {
+                                field: 'date',
+                                text: 'Date',
+                                type: 'datepicker',
+                                disabled: false,
+                                required: true,
+                                defaultvisibility: true,
+                                size: 'col-6',
+                                placeholder: 'Select Date',
+                                defaultvalue: '',
+                                cleanable: true,
+    
+                                showingrid: true,
+                                sorting: true,
+                                tablesize: 'tbl-w-250p',
+    
+                                filter: 1,
+                                filtertype: 'datepicker',
+                                filterplaceholder: 'Select Date',
+                                label: 'Date',
+                            },
+                            {
+                                field: 'journalcodeid',
+                                text: 'Journal Code',
+                                type: 'dropdown',
+                                disabled: false,
+                                required: true,
+                                defaultvisibility: true,
+                                size: 'col-6',
+                                placeholder: 'Select Journal Code',
+                                defaultvalue: '',
+                                masterdata: 'journalcode',
+                                masterdataarray: Config.journalcode,
+                                formdatafield: 'journalcode',
+                                cleanable: true,
+                                searchable: true,
+    
+                                showingrid: true,
+                                sorting: true,
+                                tablesize: 'tbl-w-250p',
+    
+                                filter: 0,
+                            },
+                            {
+                                field: 'status',
+                                text: 'Status',
+                                type: 'checkbox',
+                                disabled: false,
+                                required: false,
+                                defaultvisibility: true,
+                                size: 'col-12',
+                                placeholder: 'Select Status',
+                                defaultvalue: 1,
+    
+                                showingrid: true,
+                                sorting: false,
+                                tablesize: 'tbl-w-250p',
+    
+                                filter: 0,
+                            }
+                        ]
+                    }
+                ];
+                break;
+
         default:
             return [];
     }

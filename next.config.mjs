@@ -25,6 +25,10 @@ const nextConfig = {
       {
         source: '/laymansummary',
         destination: '/view/laymansummary',
+      },
+      {
+        source: '/research',
+        destination: '/view/research',
       }
     ];
   },

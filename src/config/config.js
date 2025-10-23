@@ -380,8 +380,8 @@ const Config = {
 
     // ==================== API ENDPOINTS ====================
     // API Base URLs (if needed)
-    apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api',
-    serverurl: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+    apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://brockersbackend.finnovationz.com',
+    serverurl: process.env.NEXT_PUBLIC_SERVER_URL || 'https://brockersbackend.finnovationz.com',
     useraction: '/api',
     authEndpoint: '/auth',
     usersEndpoint: '/users',
@@ -390,6 +390,10 @@ const Config = {
     reportsEndpoint: '/reports',
     uploadEndpoint: '/upload',
     downloadEndpoint: '/download',
+    
+    // Admin Authentication Endpoints
+    adminRegisterEndpoint: '/article/admin/register',
+    adminLoginEndpoint: '/article/admin/login',
 
     // ==================== APP CONFIGURATION ====================
     // App Settings
@@ -451,7 +455,58 @@ const Config = {
             label: 'Others',
             value: 'others'
         }
-    ]
+    ],
+
+    // Journal Options
+    journal: [
+        { value: 1, label: "AyushVeda Ayurveda" },
+        { value: 2, label: "AyushVeda Yoga" },
+        { value: 3, label: "AyushVeda Naturopathy" },
+        { value: 4, label: "AyushVeda Homeopathy" },
+        { value: 5, label: "AyushVeda Unani" },
+        { value: 6, label: "AyushVeda Siddha" },
+        { value: 7, label: "AyushVeda Global Health" },
+    ],
+
+    // Article Type Options
+    articletype: [
+        { value: 1, label: "Original Research" },
+        { value: 2, label: "Review Article" },
+        { value: 3, label: "Commentary" },
+        { value: 4, label: "Case Report" },
+        { value: 5, label: "Letter to the Editor" },
+        { value: 6, label: "Editorial" },
+        { value: 7, label: "Clinical Trial" },
+        { value: 8, label: "Meta-Analysis" },
+    ],
+
+    // Badge Type Options
+    badgetype: [
+        { value: 1, label: "Research" },
+        { value: 2, label: "Open Access" },
+        { value: 3, label: "Comment" },
+        { value: 4, label: "News" },
+        { value: 5, label: "Review" },
+    ],
+
+    // Journal Code Options
+    journalcode: [
+        { value: 1, label: "Technology" },
+        { value: 2, label: "Cardiology" },
+        { value: 3, label: "Medicine" },
+        { value: 4, label: "Pediatrics" },
+        { value: 5, label: "Oncology" },
+        { value: 6, label: "Psychiatry" },
+        { value: 7, label: "Ayurveda" },
+        { value: 8, label: "Yoga" },
+        { value: 9, label: "Naturopathy" },
+        { value: 10, label: "Homeopathy" },
+        { value: 11, label: "Unani" },
+        { value: 12, label: "Siddha" },
+        { value: 13, label: "Global Health" },
+    ],
+    
+
     // ===================== </MASTER DATA> ====================
 };
 

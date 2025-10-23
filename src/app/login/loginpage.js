@@ -7,6 +7,7 @@ import Image from "next/image";
 import SignupModal from "../../components/SignupModal";
 import IISMethods from "@/utils/IISMethods";
 import Config from "@/config/config";
+import apiService from "@/utils/ApiService";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -32,19 +33,17 @@ export default function LoginPage() {
     const onSubmit = async (data) => {
         setIsSubmitting(true);
         try {
-            // Import localStorage utilities
-            const { userStorage, sessionStorage, initializeStorage } = await import('@/utils/localStorage');
+            // Prepare login data for admin API
+            const loginData = {
+                username: data.userEmail, // API accepts username or email
+                password: data.userPassword
+            };
             
-            // Initialize storage if needed
-            initializeStorage();
+            // Call admin login API
+            const response = await apiService.loginAdmin(loginData);
             
-            // Authenticate user using localStorage
-            const user = userStorage.authenticateUser(data.userEmail, data.userPassword);
-            
-            if (user) {
-                // Set session data
-                sessionStorage.setSession(user, "local_token_" + Date.now());
-
+            if (response.success) {
+                // Handle remember me functionality
                 if (rememberMe) {
                     localStorage.setItem("rememberedEmail", data.userEmail);
                     localStorage.setItem("rememberedPassword", data.userPassword);
@@ -54,14 +53,11 @@ export default function LoginPage() {
                     localStorage.removeItem("rememberedPassword");
                     localStorage.removeItem("rememberMe");
                 }
-    
-                if (user.userRole === Config.administrator) {
-                    router.push("/dashboard");
-                } else {
-                    IISMethods.errormsg(Config.unauthorizederror, 1);
-                }
+                
+                IISMethods.successmsg("Login successful! Welcome back.", 2);
+                router.push("/dashboard");
             } else {
-                IISMethods.errormsg(Config.invalidCredentialserror, 1);
+                IISMethods.errormsg(response.message || Config.invalidCredentialserror, 1);
             }
         } catch (error) {
             console.error("Login error:", error);
@@ -88,20 +84,20 @@ export default function LoginPage() {
             <div className="login-form-section">
                 <div className="login-form-container">
                     <div className="login-header">
-                        <h2 className="login-title">Sign in to your account</h2>
+                        <h2 className="login-title">Admin Sign In</h2>
                         <p className="login-subtitle">
-                            Welcome back! Please enter your login details below to access your account.
+                            Welcome back! Please enter your admin credentials below to access the article management system.
                         </p>
                     </div>
 
                     <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-group">
                             <input 
-                                id="email" 
-                                type="email" 
-                                {...register("userEmail", { required: "Email is required" })} 
+                                id="username" 
+                                type="text" 
+                                {...register("userEmail", { required: "Username or Email is required" })} 
                                 className="form-input" 
-                                placeholder="Enter your email" 
+                                placeholder="Enter your username or email" 
                             />
                             {errors.userEmail && <p className="error-message">{errors.userEmail.message}</p>}
                         </div>
@@ -168,13 +164,13 @@ export default function LoginPage() {
                         </button>
 
                         <div className="signup-link">
-                            <span>{"Don't have an account?"}</span>
+                            <span>{"Don't have an admin account?"}</span>
                             <button 
                                 type="button" 
                                 className="signup-button" 
                                 onClick={() => setIsSignupModalOpen(true)}
                             >
-                                Sign up
+                                Register Admin
                             </button>
                         </div>
                     </form>

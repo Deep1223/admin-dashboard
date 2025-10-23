@@ -83,6 +83,7 @@ const GridList = (props) => {
     const [sortState, setSortState] = useState({});
     const [sortedData, setSortedData] = useState([]);
     const [textareaValue, setTextareaValue] = useState('');
+    const [htmlEditorValue, setHtmlEditorValue] = useState('');
 
     useEffect(() => {
         // Only add event listener on client side
@@ -329,11 +330,18 @@ const GridList = (props) => {
                                                                                 <span className="text-14p">
                                                                                     {data[field.field] ? IISMethods.getDateFormate(data[field.field]) : '-'}
                                                                                 </span>
-                                                                            :
-                                                                            field.type === 'dropdown' ?
+                                                                                :
+                                                                                field.type === 'dropdown' ?
                                                                                     <span className="text-14p">{data[field.field] ? data[field.formdatafield] : '-'}</span>
-                                                                            :
-                                                                            <></>
+                                                                                    :
+                                                                                    field.type === 'html-editor' ?
+                                                                                        <span className="text-14p">{data[field.field] ?
+                                                                                            <span className="w-fit-content text-primary cursor-pointer" onClick={() => { setHtmlEditorValue(data[field.field]); IISMethods.handleGrid(true, 'viewhtmleditormodal', 1) }}>
+                                                                                                <FiEye />
+                                                                                            </span>
+                                                                                            : '-'}</span>
+                                                                                        :
+                                                                                        <></>
                                                             }
                                                         </td>
                                                     ))}
@@ -387,6 +395,20 @@ const GridList = (props) => {
                     }
                 />
 
+                <ModalRsuite
+                    open={getCurrentState().modal.viewhtmleditormodal}
+                    onClose={() => { IISMethods.handleGrid(false, 'viewhtmleditormodal', 0); setHtmlEditorValue(''); }}
+                    title="View HTML Editor"
+                    body={
+                        <div className="col-12">
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: htmlEditorValue
+                                }}
+                            />
+                        </div>
+                    }
+                />
             </>
         );
     }

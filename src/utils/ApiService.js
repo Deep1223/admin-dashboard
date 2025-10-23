@@ -5,11 +5,11 @@
 
 import IISMethods from './IISMethods';
 import Config from '@/config/config';
-import { 
-    userStorage, 
-    leadsStorage, 
-    masterDataStorage, 
-    sessionStorage 
+import {
+    userStorage,
+    leadsStorage,
+    masterDataStorage,
+    sessionStorage
 } from './localStorage';
 
 class ApiService {
@@ -69,7 +69,7 @@ class ApiService {
     createRecordInfo(action = 'create') {
         const currentUser = this.getCurrentUser();
         const now = new Date().toISOString();
-        
+
         if (action === 'create') {
             return {
                 entryBy: currentUser.userId || 'system',
@@ -93,7 +93,7 @@ class ApiService {
      */
     addRecordInfo(data, action = 'create') {
         const recordInfo = this.createRecordInfo(action);
-        
+
         if (action === 'create') {
             return {
                 _id: this.generateId(),
@@ -141,11 +141,11 @@ class ApiService {
             return await response.json();
         } catch (error) {
             clearTimeout(timeoutId);
-            
+
             if (error.name === 'AbortError') {
                 throw new Error('Request timeout');
             }
-            
+
             throw error;
         }
     }
@@ -153,7 +153,7 @@ class ApiService {
     /**
      * Generic CRUD operations
      */
-    
+
     /**
      * Create new record
      * @param {string} entity - Entity type (users, leads, categories, etc.)
@@ -164,7 +164,7 @@ class ApiService {
     async create(entity, data, includeData = true) {
         try {
             const recordData = this.addRecordInfo(data, 'create');
-            
+
             if (this.storageMode === 'localStorage') {
                 return this.createLocal(entity, recordData, includeData);
             } else {
@@ -212,7 +212,7 @@ class ApiService {
     async update(entity, id, data, includeData = true) {
         try {
             const recordData = this.addRecordInfo(data, 'update');
-            
+
             if (this.storageMode === 'localStorage') {
                 return this.updateLocal(entity, id, recordData, includeData);
             } else {
@@ -288,10 +288,10 @@ class ApiService {
         try {
             const storageKey = entity;
             const existingData = IISMethods.getLocalStorage(storageKey, []);
-            
+
             existingData.push(data);
             IISMethods.setLocalStorage(storageKey, existingData);
-            
+
             return {
                 status: 200,
                 success: true,
@@ -319,56 +319,56 @@ class ApiService {
 
             console.log('### options', options, 'entity', entity)
             const storageKey = entity;
-        let data = IISMethods.getLocalStorage(storageKey, []);
-        
-        // Apply filters
-        if (options.filters) {
-            data = this.applyFilters(data, options.filters);
+            let data = IISMethods.getLocalStorage(storageKey, []);
+
+            // Apply filters
+            if (options.filters) {
+                data = this.applyFilters(data, options.filters);
+            }
+
+            // Apply search
+            if (options.search) {
+                data = this.applySearch(data, options.search);
+            }
+
+            // Apply sorting
+            if (options.sort) {
+                data = this.applySorting(data, options.sort);
+            }
+
+            // Apply projection
+            if (options.projection) {
+                data = this.applyProjection(data, options.projection);
+            }
+
+            // Apply pagination
+            const totalCount = data.length;
+
+            if (options.pagination) {
+                const { page = 1, limit = 20 } = options.pagination;
+                const startIndex = (page - 1) * limit;
+                const endIndex = startIndex + limit;
+                data = data.slice(startIndex, endIndex);
+            }
+
+            return {
+                status: 200,
+                success: true,
+                data,
+                totalCount,
+                page: options.pagination?.page || 1,
+                limit: options.pagination?.limit || 20,
+                hasNextPage: (options.pagination?.page || 1) * (options.pagination?.limit || 20) < totalCount
+            };
         }
-        
-        // Apply search
-        if (options.search) {
-            data = this.applySearch(data, options.search);
+        catch (error) {
+            console.error(`Error reading ${entity}:`, error);
+            return {
+                status: 500,
+                success: false,
+                message: `Failed to read ${entity}`
+            };
         }
-        
-        // Apply sorting
-        if (options.sort) {
-            data = this.applySorting(data, options.sort);
-        }
-        
-        // Apply projection
-        if (options.projection) {
-            data = this.applyProjection(data, options.projection);
-        }
-        
-        // Apply pagination
-        const totalCount = data.length;
-        
-        if (options.pagination) {
-            const { page = 1, limit = 20 } = options.pagination;
-            const startIndex = (page - 1) * limit;
-            const endIndex = startIndex + limit;
-            data = data.slice(startIndex, endIndex);
-        }
-        
-        return {
-            status: 200,
-            success: true,
-            data,
-            totalCount,
-            page: options.pagination?.page || 1,
-            limit: options.pagination?.limit || 20,
-            hasNextPage: (options.pagination?.page || 1) * (options.pagination?.limit || 20) < totalCount
-        };
-    }
-    catch (error) {
-        console.error(`Error reading ${entity}:`, error);
-        return {
-            status: 500,
-            success: false,
-            message: `Failed to read ${entity}`
-        };
-    }
     }
 
     /**
@@ -384,7 +384,7 @@ class ApiService {
             const storageKey = entity;
             const existingData = IISMethods.getLocalStorage(storageKey, []);
             const index = existingData.findIndex(item => item._id === id);
-            
+
             if (index === -1) {
                 return {
                     status: 404,
@@ -393,7 +393,7 @@ class ApiService {
                     message: `${entity} not found`
                 };
             }
-            
+
             const updatedRecord = {
                 ...existingData[index],
                 ...data,
@@ -402,10 +402,10 @@ class ApiService {
                     ...data.recordinfo
                 }
             };
-            
+
             existingData[index] = updatedRecord;
             IISMethods.setLocalStorage(storageKey, existingData);
-            
+
             return {
                 status: 200,
                 success: true,
@@ -434,7 +434,7 @@ class ApiService {
             const storageKey = entity;
             const existingData = IISMethods.getLocalStorage(storageKey, []);
             const filteredData = existingData.filter(item => item._id !== id);
-            
+
             if (filteredData.length === existingData.length) {
                 return {
                     status: 404,
@@ -443,9 +443,9 @@ class ApiService {
                     message: `${entity} not found`
                 };
             }
-            
+
             IISMethods.setLocalStorage(storageKey, filteredData);
-            
+
             return {
                 status: 200,
                 success: true,
@@ -492,7 +492,7 @@ class ApiService {
                 method: 'POST',
                 body: JSON.stringify(data)
             });
-            
+
             return {
                 status: response.success ? 200 : 500,
                 success: response.success,
@@ -517,7 +517,7 @@ class ApiService {
      */
     async readApi(entity, options = {}) {
         const queryParams = new URLSearchParams();
-        
+
         if (options.filters) {
             queryParams.append('filters', JSON.stringify(options.filters));
         }
@@ -531,10 +531,10 @@ class ApiService {
             queryParams.append('page', options.pagination.page || 1);
             queryParams.append('limit', options.pagination.limit || 20);
         }
-        
+
         const url = `${this.baseUrl}/${entity}?${queryParams.toString()}`;
         const response = await this.makeApiRequest(url);
-        
+
         if (response.success) {
             return response.data;
         } else {
@@ -557,7 +557,7 @@ class ApiService {
                 method: 'PUT',
                 body: JSON.stringify(data)
             });
-            
+
             return {
                 status: response.success ? 200 : 500,
                 success: response.success,
@@ -587,7 +587,7 @@ class ApiService {
             const response = await this.makeApiRequest(url, {
                 method: 'DELETE'
             });
-            
+
             return {
                 status: response.success ? 200 : 500,
                 success: response.success,
@@ -613,7 +613,7 @@ class ApiService {
     async findByIdApi(entity, id) {
         const url = `${this.baseUrl}/${entity}/${id}`;
         const response = await this.makeApiRequest(url);
-        
+
         if (response.success) {
             return response.data;
         } else {
@@ -636,15 +636,15 @@ class ApiService {
             return Object.keys(filters).every(key => {
                 const filterValue = filters[key];
                 const itemValue = item[key];
-                
+
                 if (filterValue === null || filterValue === undefined || filterValue === '') {
                     return true;
                 }
-                
+
                 if (typeof filterValue === 'string') {
                     return itemValue && itemValue.toString().toLowerCase().includes(filterValue.toLowerCase());
                 }
-                
+
                 if (typeof filterValue === 'object' && filterValue.operator) {
                     switch (filterValue.operator) {
                         case 'eq':
@@ -667,7 +667,7 @@ class ApiService {
                             return true;
                     }
                 }
-                
+
                 return itemValue === filterValue;
             });
         });
@@ -681,7 +681,7 @@ class ApiService {
      */
     applySearch(data, searchTerm) {
         if (!searchTerm) return data;
-        
+
         const term = searchTerm.toLowerCase();
         return data.filter(item => {
             return Object.values(item).some(value => {
@@ -704,11 +704,11 @@ class ApiService {
      */
     applySorting(data, sort) {
         if (!sort.field) return data;
-        
+
         return data.sort((a, b) => {
             const aValue = a[sort.field];
             const bValue = b[sort.field];
-            
+
             if (aValue < bValue) return sort.order === 'asc' ? -1 : 1;
             if (aValue > bValue) return sort.order === 'asc' ? 1 : -1;
             return 0;
@@ -723,7 +723,7 @@ class ApiService {
      */
     applyProjection(data, projection) {
         if (!projection || Object.keys(projection).length === 0) return data;
-        
+
         return data.map(item => {
             const projectedItem = {};
             Object.keys(projection).forEach(key => {
@@ -744,24 +744,24 @@ class ApiService {
         try {
             const storageKey = entity;
             const localData = IISMethods.getLocalStorage(storageKey, []);
-            
+
             if (localData.length === 0) {
                 IISMethods.infomsg(`No ${entity} data to migrate`, 4);
                 return true;
             }
-            
+
             // Switch to API mode
             const originalMode = this.storageMode;
             this.setStorageMode('api');
-            
+
             // Migrate each record
             for (const record of localData) {
                 await this.createApi(entity, record);
             }
-            
+
             // Clear localStorage data
             IISMethods.removeLocalStorage(storageKey);
-            
+
             IISMethods.successmsg(`Successfully migrated ${localData.length} ${entity} records to API`, 2);
             return true;
         } catch (error) {
@@ -794,16 +794,94 @@ class ApiService {
             if (!Array.isArray(data)) {
                 throw new Error('Invalid data format');
             }
-            
+
             const storageKey = entity;
             IISMethods.setLocalStorage(storageKey, data);
-            
+
             IISMethods.successmsg(`Successfully imported ${data.length} ${entity} records`, 2);
             return true;
         } catch (error) {
             console.error(`Error importing ${entity}:`, error);
             IISMethods.errormsg(`Failed to import ${entity} data`, 1);
             return false;
+        }
+    }
+
+    /**
+     * ADMIN AUTHENTICATION METHODS
+     */
+
+    /**
+     * Register admin user
+     * @param {object} adminData - Admin registration data
+     * @returns {Promise<object>} Registration response
+     */
+    async registerAdmin(adminData) {
+        try {
+            const url = `${this.baseUrl}${Config.adminRegisterEndpoint}`;
+            const response = await this.makeApiRequest(url, {
+                method: 'POST',
+                body: JSON.stringify(adminData)
+            });
+
+            return {
+                status: response.success ? 200 : 400,
+                success: response.success,
+                data: response.data,
+                message: response.message || 'Admin registration completed'
+            };
+        } catch (error) {
+            console.error('Admin registration error:', error);
+            return {
+                status: 500,
+                success: false,
+                data: null,
+                message: error.message || 'Admin registration failed'
+            };
+        }
+    }
+
+    /**
+     * Login admin user
+     * @param {object} loginData - Login credentials
+     * @returns {Promise<object>} Login response
+     */
+    async loginAdmin(loginData) {
+        try {
+            const url = `${this.baseUrl}${Config.adminLoginEndpoint}`;
+            const response = await this.makeApiRequest(url, {
+                method: 'POST',
+                body: JSON.stringify(loginData)
+            });
+
+            if (response.success && response.data) {
+                // Store admin session data
+                const sessionData = {
+                    adminId: response.data.admin._id,
+                    username: response.data.admin.username,
+                    email: response.data.admin.email,
+                    role: response.data.admin.role,
+                    token: response.data.token,
+                    lastLogin: response.data.admin.lastLogin
+                };
+                
+                sessionStorage.setSession(sessionData, response.data.token);
+            }
+
+            return {
+                status: response.success ? 200 : 401,
+                success: response.success,
+                data: response.data,
+                message: response.message || 'Login completed'
+            };
+        } catch (error) {
+            console.error('Admin login error:', error);
+            return {
+                status: 500,
+                success: false,
+                data: null,
+                message: error.message || 'Admin login failed'
+            };
         }
     }
 }
