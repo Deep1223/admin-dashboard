@@ -122,12 +122,19 @@ class ApiService {
         const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
         try {
+            // Prepare headers
+            const headers = {
+                'Authorization': `Bearer ${sessionStorage.getSession().token}`,
+                ...options.headers
+            };
+
+            // Only set Content-Type for JSON, not for FormData
+            if (!(options.body instanceof FormData)) {
+                headers['Content-Type'] = 'application/json';
+            }
+
             const response = await fetch(url, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sessionStorage.getSession().token}`,
-                    ...options.headers
-                },
+                headers,
                 signal: controller.signal,
                 ...options
             });
@@ -978,31 +985,69 @@ class ApiService {
             // Create FormData for multipart/form-data
             const formData = new FormData();
             
-            // Add text fields
+            // Add text fields - handle fields that might have "0" as valid value
             if (data.title) formData.append('title', data.title);
             if (data.content) formData.append('content', data.content);
-            if (data.status) formData.append('status', data.status);
+            
+            // Handle status field properly - "0" is a valid status value
+            if (data.status !== undefined && data.status !== null && data.status !== '') {
+                formData.append('status', data.status);
+            }
+            
             if (data.journal) formData.append('journal', data.journal);
             if (data.journalCode) formData.append('journalCode', data.journalCode);
             if (data.articleType) formData.append('articleType', data.articleType);
+            
+            // Add other fields that might have "0" as valid value
+            if (data.badgeType !== undefined && data.badgeType !== null && data.badgeType !== '') {
+                formData.append('badgeType', data.badgeType);
+            }
+            if (data.excerpt !== undefined && data.excerpt !== null && data.excerpt !== '') {
+                formData.append('excerpt', data.excerpt);
+            }
+            if (data.keywords && Array.isArray(data.keywords)) {
+                formData.append('keywords', JSON.stringify(data.keywords));
+            }
+            if (data.authors && Array.isArray(data.authors)) {
+                formData.append('authors', JSON.stringify(data.authors));
+            }
+            if (data.date) {
+                formData.append('date', data.date);
+            }
             
             // Add image file if provided
             if (data.image && data.image instanceof File) {
                 formData.append('image', data.image);
             }
 
+            // Debug: Log what's being sent in FormData
+            console.log('FormData contents:');
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
+
             const response = await this.makeApiRequest(url, {
                 method: 'PUT',
-                body: formData,
-                headers: {
-                    // Don't set Content-Type, let browser set it with boundary for FormData
-                }
+                body: formData
+                // Don't set headers, let makeApiRequest handle Authorization and Content-Type
             });
 
+            // Handle different response structures including string status values
+            const isSuccess = response.success !== false && response.data;
+            const responseStatus = response.status;
+            
+            // Handle string status values ("0" = success, "1" = error) or boolean/numeric values
+            let finalStatus;
+            if (typeof responseStatus === 'string') {
+                finalStatus = responseStatus === "0" ? 200 : 400; // "0" means success
+            } else {
+                finalStatus = isSuccess ? 200 : 400;
+            }
+            
             return {
-                status: response.success ? 200 : 400,
-                success: response.success,
-                data: response.data,
+                status: finalStatus,
+                success: finalStatus === 200,
+                data: response.data || response,
                 message: response.message || 'Article updated successfully'
             };
         } catch (error) {

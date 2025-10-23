@@ -316,7 +316,7 @@ const GridList = (props) => {
                                                                     field.type === "checkbox" ?
                                                                         <div className="form-check form-switch">
                                                                             <input className="form-check-input" type="checkbox" role="switch" id="switchCheckDefault"
-                                                                                checked={data[field.field] ? data[field.field] === 1 : 0} onChange={(e) => { onChangeCheckbox(field.type, field.field, e.target.checked ? 1 : 0, data._id, { ...data }) }} />
+                                                                                checked={data[field.field] === 1 || data[field.field] === '1' ? data[field.field] === 1 || data[field.field] === '1' : 0} onChange={(e) => { onChangeCheckbox(field.type, field.field, e.target.checked ? 1 : 0, data._id, { ...data }) }} />
                                                                         </div>
                                                                         :
                                                                         field.type === 'textarea' ?
@@ -332,7 +332,14 @@ const GridList = (props) => {
                                                                                 </span>
                                                                                 :
                                                                                 field.type === 'dropdown' ?
-                                                                                    <span className="text-14p">{data[field.field] ? data[field.formdatafield] : '-'}</span>
+                                                                                    <>
+                                                                                    {
+                                                                                        field.takeformdatafield ?
+                                                                                            <span className="text-14p">{data[field.formdatafield] ? data[field.formdatafield] : '-'}</span>
+                                                                                            :
+                                                                                            <span className="text-14p">{data[field.field] ? data[field.field] : '-'}</span>
+                                                                                        }
+                                                                                    </>
                                                                                     :
                                                                                     field.type === 'html-editor' ?
                                                                                         <span className="text-14p">{data[field.field] ?

@@ -667,7 +667,8 @@ const MasterJson = (type) => {
                                 formdatafield: 'journal',
                                 cleanable: true,
                                 searchable: true,
-    
+                                takeformdatafield: true,
+
                                 showingrid: true,
                                 sorting: true,
                                 tablesize: 'tbl-w-250p',
@@ -686,9 +687,10 @@ const MasterJson = (type) => {
                                 defaultvalue: '',
                                 masterdata: 'articletype',
                                 masterdataarray: Config.articletype,
-                                formdatafield: 'articletype',
+                                formdatafield: 'articleType',
                                 cleanable: true,
                                 searchable: true,
+                                takeformdatafield: true,
     
                                 showingrid: true,
                                 sorting: true,
@@ -725,9 +727,10 @@ const MasterJson = (type) => {
                                 defaultvalue: '',
                                 masterdata: 'badge',
                                 masterdataarray: Config.badgetype,
-                                formdatafield: 'badgetype',
+                                formdatafield: 'badgeType',
                                 cleanable: true,
                                 searchable: true,
+                                takeformdatafield: true,
     
                                 showingrid: true,
                                 sorting: true,
@@ -768,9 +771,10 @@ const MasterJson = (type) => {
                                 defaultvalue: '',
                                 masterdata: 'journalcode',
                                 masterdataarray: Config.journalcode,
-                                formdatafield: 'journalcode',
+                                formdatafield: 'journalCode',
                                 cleanable: true,
                                 searchable: true,
+                                takeformdatafield: true,
     
                                 showingrid: true,
                                 sorting: true,

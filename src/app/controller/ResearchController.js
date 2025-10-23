@@ -148,13 +148,22 @@ const ResearchController = (props) => {
             // Use ApiService to update data
             const responseData = await ApiService.update('articles', id, formData);
             console.log('Updated record:', responseData);
+            console.log('Response status:', responseData.status, 'Type:', typeof responseData.status);
+            console.log('Response success:', responseData.success);
 
-            if (responseData.status === 200) {
+            // Handle both numeric and string status values
+            const isUpdateSuccessful = responseData.status === 200 || 
+                                     responseData.status === "0" || 
+                                     responseData.success === true;
+            
+            if (isUpdateSuccessful) {
                 IISMethods.successmsg(Config.dataupdated, 2);
                 IISMethods.handleGrid(false, 'rightsidebar', 0)
                 // Refresh the data list
+                console.log('Calling getlist() to refresh grid...');
                 getlist();
             } else {
+                console.log('Update failed, status:', responseData.status, 'success:', responseData.success);
                 IISMethods.errormsg(responseData.message || Config.dataaddedfailed, 1);
             }
 
@@ -225,6 +234,7 @@ const ResearchController = (props) => {
             console.log('result result', result)
             // Update Redux state with the response data
             if (result && result.data) {
+                console.log('Updating Redux state with fresh data...');
                 setProps({
                     data: result.data,
                     totalcount: result.totalCount || result.totalcount || 0,
