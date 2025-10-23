@@ -146,7 +146,7 @@ const ResearchController = (props) => {
             console.log('updateData', id, formData);
 
             // Use ApiService to update data
-            const responseData = await ApiService.update('submit-research', id, formData);
+            const responseData = await ApiService.update('articles', id, formData);
             console.log('Updated record:', responseData);
 
             if (responseData.status === 200) {
@@ -206,11 +206,13 @@ const ResearchController = (props) => {
             })
 
             console.log('filter 23445', filter)
+            console.log('searchTerm:', searchTerm)
+            console.log('pagination:', { page: getCurrentState().pageno, limit: getCurrentState().pagelimit })
 
             // Set loading state
             setProps({ loading: true });
             // Call ApiService with clean filters and separate search
-            const result = await ApiService.read('submit-research', {
+            const result = await ApiService.read('articles', {
                 pagination: {
                     page: getCurrentState().pageno,
                     limit: getCurrentState().pagelimit
@@ -298,7 +300,7 @@ const ResearchController = (props) => {
 
     const handleDeleteData = async (id) => {
         try {
-            const result = await ApiService.delete('submit-research', id);
+            const result = await ApiService.delete('articles', id);
             console.log('result', result);
             if (result.status === 200) {
                 IISMethods.successmsg(Config.datadeleted, 1)

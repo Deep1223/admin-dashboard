@@ -395,6 +395,10 @@ const Config = {
     adminRegisterEndpoint: '/api/article/admin/register',
     adminLoginEndpoint: '/api/article/admin/login',
 
+    // Article Management Endpoints
+    articlesEndpoint: '/api/article/articles',
+    articleByIdEndpoint: '/api/article/articles',
+
     // ==================== APP CONFIGURATION ====================
     // App Settings
     appName: 'CRM System',

@@ -189,6 +189,11 @@ class ApiService {
      */
     async read(entity, options = {}) {
         try {
+            // Special handling for articles entity
+            if (entity === 'articles') {
+                return await this.getArticles(options);
+            }
+            
             if (this.storageMode === 'localStorage') {
                 return this.readLocal(entity, options);
             } else {
@@ -211,6 +216,11 @@ class ApiService {
      */
     async update(entity, id, data, includeData = true) {
         try {
+            // Special handling for articles entity
+            if (entity === 'articles') {
+                return await this.updateArticle(id, data);
+            }
+            
             const recordData = this.addRecordInfo(data, 'update');
 
             if (this.storageMode === 'localStorage') {
@@ -238,6 +248,11 @@ class ApiService {
      */
     async delete(entity, id, includeData = false) {
         try {
+            // Special handling for articles entity
+            if (entity === 'articles') {
+                return await this.deleteArticle(id);
+            }
+            
             if (this.storageMode === 'localStorage') {
                 return this.deleteLocal(entity, id, includeData);
             } else {
@@ -881,6 +896,149 @@ class ApiService {
                 success: false,
                 data: null,
                 message: error.message || 'Admin login failed'
+            };
+        }
+    }
+
+    /**
+     * ARTICLE MANAGEMENT METHODS
+     */
+
+    /**
+     * Get all articles with pagination and filters
+     * @param {object} params - Query parameters
+     * @returns {Promise<object>} Articles response
+     */
+    async getArticles(options = {}) {
+        try {
+            console.log('getArticles called with options:', options);
+            const queryParams = new URLSearchParams();
+            
+            // Handle pagination from options
+            const pagination = options.pagination || {};
+            if (pagination.page) queryParams.append('page', pagination.page);
+            if (pagination.limit) queryParams.append('limit', pagination.limit);
+            
+            // Handle search from options
+            if (options.search) {
+                console.log('Adding search parameter:', options.search);
+                queryParams.append('search', options.search);
+            }
+            
+            // Handle filters from options - dynamic handling for all filter fields
+            const filters = options.filters || {};
+            console.log('Processing filters:', filters);
+            Object.keys(filters).forEach(key => {
+                if (filters[key] && filters[key] !== '') {
+                    console.log(`Adding filter parameter: ${key} = ${filters[key]}`);
+                    queryParams.append(key, filters[key]);
+                }
+            });
+
+            const url = `${this.baseUrl}${Config.articlesEndpoint}${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
+            const response = await this.makeApiRequest(url, {
+                method: 'GET'
+            });
+
+            return {
+                status: response.success ? 200 : 400,
+                success: response.success,
+                data: response.data?.articles || [],
+                pagination: response.data?.pagination || {},
+                totalCount: response.data?.pagination?.total || 0,
+                totalcount: response.data?.pagination?.total || 0, // For backward compatibility
+                hasNextPage: response.data?.pagination?.current < response.data?.pagination?.pages,
+                message: response.message || 'Articles fetched successfully'
+            };
+        } catch (error) {
+            console.error('Get articles error:', error);
+            return {
+                status: 500,
+                success: false,
+                data: [],
+                pagination: {},
+                totalCount: 0,
+                totalcount: 0, // For backward compatibility
+                hasNextPage: false,
+                message: error.message || 'Failed to fetch articles'
+            };
+        }
+    }
+
+    /**
+     * Update article
+     * @param {string} id - Article ID
+     * @param {object} data - Article data
+     * @returns {Promise<object>} Update response
+     */
+    async updateArticle(id, data) {
+        try {
+            const url = `${this.baseUrl}${Config.articleByIdEndpoint}/${id}`;
+            
+            // Create FormData for multipart/form-data
+            const formData = new FormData();
+            
+            // Add text fields
+            if (data.title) formData.append('title', data.title);
+            if (data.content) formData.append('content', data.content);
+            if (data.status) formData.append('status', data.status);
+            if (data.journal) formData.append('journal', data.journal);
+            if (data.journalCode) formData.append('journalCode', data.journalCode);
+            if (data.articleType) formData.append('articleType', data.articleType);
+            
+            // Add image file if provided
+            if (data.image && data.image instanceof File) {
+                formData.append('image', data.image);
+            }
+
+            const response = await this.makeApiRequest(url, {
+                method: 'PUT',
+                body: formData,
+                headers: {
+                    // Don't set Content-Type, let browser set it with boundary for FormData
+                }
+            });
+
+            return {
+                status: response.success ? 200 : 400,
+                success: response.success,
+                data: response.data,
+                message: response.message || 'Article updated successfully'
+            };
+        } catch (error) {
+            console.error('Update article error:', error);
+            return {
+                status: 500,
+                success: false,
+                data: null,
+                message: error.message || 'Failed to update article'
+            };
+        }
+    }
+
+    /**
+     * Delete article
+     * @param {string} id - Article ID
+     * @returns {Promise<object>} Delete response
+     */
+    async deleteArticle(id) {
+        try {
+            const url = `${this.baseUrl}${Config.articleByIdEndpoint}/${id}`;
+            const response = await this.makeApiRequest(url, {
+                method: 'DELETE'
+            });
+
+            return {
+                status: response.success ? 200 : 400,
+                success: response.success,
+                message: response.message || 'Article deleted successfully'
+            };
+        } catch (error) {
+            console.error('Delete article error:', error);
+            return {
+                status: 500,
+                success: false,
+                message: error.message || 'Failed to delete article'
             };
         }
     }
