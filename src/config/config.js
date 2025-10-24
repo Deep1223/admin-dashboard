@@ -487,10 +487,6 @@ const Config = {
     // Badge Type Options
     badgetype: [
         { value: 1, label: "Research" },
-        { value: 2, label: "Open Access" },
-        { value: 3, label: "Comment" },
-        { value: 4, label: "News" },
-        { value: 5, label: "Review" },
     ],
 
     // Journal Code Options
