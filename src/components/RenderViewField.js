@@ -24,7 +24,7 @@ const RenderViewField = (props) => {
                         <input type="checkbox"
                             id={`form-${props.field.field}`}
                             name={props.field.field}
-                            checked={props.viewDetails[props.field.field] ? props.viewDetails[props.field.field] === 1 : 0} disabled />
+                            checked={props.viewDetails[props.field.field] && (props.viewDetails[props.field.field] == 1 || props.viewDetails[props.field.field] == '1') ? 1 : 0} disabled />
                         <span className="text-14 fw-semibold text-black render-view-description text-break">{props.field.text}</span>
                         <span className="checkmark"></span>
                     </label>
@@ -87,7 +87,11 @@ const RenderViewField = (props) => {
                 <div className="form-group validate-input"> 
                     <label className="label-form-control text-black font-weight-600 text-14 mb-0">{props.field.text}</label>
                     <span className="text-14 fw-semibold text-secondary render-view-description text-break">
-                        {props.viewDetails[props.field.field] ? props.viewDetails[props.field.formdatafield] : '-'}
+                        {
+                            props.field.takeformdatafield ? 
+                            props.viewDetails[props.field.formdatafield] ? props.viewDetails[props.field.formdatafield] : '-' :
+                            props.viewDetails[props.field.field] ? props.viewDetails[props.field.field] : '-'
+                        }
                     </span>
                 </div>
             </div>

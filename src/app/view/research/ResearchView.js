@@ -10,6 +10,7 @@ import FilterRightSidebar from '@/components/FilterRightSidebar';
 import InfoModal from '@/components/InfoModal';
 import FilteredDataBadge from '@/components/FilteredDataBadge';
 import GridList from '@/app/common/GridList';
+import RightSidebar from '@/components/RightSIdebar';
 
 const ResearchView = (props) => {
     // Redux hook at the top of component
@@ -55,8 +56,12 @@ const ResearchView = (props) => {
                     </div>
                 </div>
 
-                <FilteredDataBadge 
+                <FilteredDataBadge
                     getlist={props.getlist}
+                />
+
+                <RightSidebar
+                    viewDetails={viewDetails}
                 />
 
                 {/* Table Component */}
@@ -70,6 +75,7 @@ const ResearchView = (props) => {
                     handleFormData={props.handleFormData}
                     updateData={props.updateData}
                     filtereddata={filterData}
+                    noneditable={true}
                 />
 
                 <DeleteModal

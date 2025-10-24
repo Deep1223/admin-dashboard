@@ -24,12 +24,16 @@ const ThreeDotMenu = (props) => {
                 onMouseEnter={(e) => e.stopPropagation()}
                 onMouseLeave={(e) => e.stopPropagation()}
             >
-                <button className="dropdown-item d-flex align-items-center gap-2 py-2 border-bottom" onClick={async () => {
-                    await props.setFormData(props.data._id);
-                    props.setDropdownOpen(null);
-                }}>
-                    <FaRegEdit /> Edit
-                </button>
+                {
+                    props.noneditable ?
+                        <></> :
+                        <button className="dropdown-item d-flex align-items-center gap-2 py-2 border-bottom" onClick={async () => {
+                            await props.setFormData(props.data._id);
+                            props.setDropdownOpen(null);
+                        }}>
+                            <FaRegEdit /> Edit
+                        </button>
+                }
 
                 <button
                     className="dropdown-item d-flex align-items-center gap-2 py-2 border-bottom"
@@ -302,6 +306,7 @@ const GridList = (props) => {
                                                                 data={data}
                                                                 setDeleteDetails={props.setDeleteDetails}
                                                                 setViewInfoData={props.setViewInfoData}
+                                                                noneditable={props.noneditable}
                                                             />
 
                                                         )}
@@ -333,11 +338,11 @@ const GridList = (props) => {
                                                                                 :
                                                                                 field.type === 'dropdown' ?
                                                                                     <>
-                                                                                    {
-                                                                                        field.takeformdatafield ?
-                                                                                            <span className="text-14p">{data[field.formdatafield] ? data[field.formdatafield] : '-'}</span>
-                                                                                            :
-                                                                                            <span className="text-14p">{data[field.field] ? data[field.field] : '-'}</span>
+                                                                                        {
+                                                                                            field.takeformdatafield ?
+                                                                                                <span className="text-14p">{data[field.formdatafield] ? data[field.formdatafield] : '-'}</span>
+                                                                                                :
+                                                                                                <span className="text-14p">{data[field.field] ? data[field.field] : '-'}</span>
                                                                                         }
                                                                                     </>
                                                                                     :

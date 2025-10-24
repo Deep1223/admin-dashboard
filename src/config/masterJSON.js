@@ -645,7 +645,7 @@ const MasterJson = (type) => {
     
                                 showingrid: true,
                                 sorting: true,
-                                tablesize: 'tbl-w-250p',
+                                tablesize: 'tbl-minw-250p',
     
                                 filter: 1,
                                 filtertype: 'text',
@@ -694,7 +694,7 @@ const MasterJson = (type) => {
     
                                 showingrid: true,
                                 sorting: true,
-                                tablesize: 'tbl-w-250p',
+                                tablesize: 'tbl-minw-250p',
     
                                 filter: 0,
                             },
@@ -711,7 +711,7 @@ const MasterJson = (type) => {
     
                                 showingrid: true,
                                 sorting: false,
-                                tablesize: 'tbl-w-250p',
+                                tablesize: 'tbl-minw-250p',
     
                                 filter: 0,
                             },
@@ -734,7 +734,7 @@ const MasterJson = (type) => {
     
                                 showingrid: true,
                                 sorting: true,
-                                tablesize: 'tbl-w-250p',
+                                tablesize: 'tbl-minw-250p',
     
                                 filter: 0,
                             },
@@ -752,7 +752,7 @@ const MasterJson = (type) => {
     
                                 showingrid: true,
                                 sorting: true,
-                                tablesize: 'tbl-w-250p',
+                                tablesize: 'tbl-minw-250p',
     
                                 filter: 1,
                                 filtertype: 'datepicker',
@@ -778,7 +778,7 @@ const MasterJson = (type) => {
     
                                 showingrid: true,
                                 sorting: true,
-                                tablesize: 'tbl-w-250p',
+                                tablesize: 'tbl-minw-250p',
     
                                 filter: 0,
                             },
@@ -795,7 +795,7 @@ const MasterJson = (type) => {
     
                                 showingrid: true,
                                 sorting: false,
-                                tablesize: 'tbl-w-250p',
+                                tablesize: 'tbl-minw-250p',
     
                                 filter: 0,
                             }
